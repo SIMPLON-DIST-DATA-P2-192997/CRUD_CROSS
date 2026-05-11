@@ -1,7 +1,18 @@
 import requests
-
 import pandas as pd
 from io import StringIO
+
+from schemas.flotteur import FlotteurSchema
+from schemas.humain_results import HumainResultSchema
+from schemas.operations import OperationSchema
+from schemas.operations_stats import OperationStatsSchema
+
+SCHEMAS = {
+    "human_result": HumainResultSchema,
+    "operation_stats": OperationStatsSchema,
+    "flotteurs": FlotteurSchema,
+    "operations": OperationSchema,
+}
 
 urls = [
   {
@@ -22,9 +33,16 @@ urls = [
   }
 ]
 
+headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
+
 for item in urls:
-  res = requests.get(item['url'])
-  data = StringIO(res.content.decode("utf-8"))
-  df = pd.read_csv(data,sep=',',low_memory=False)
-  df.to_csv(f'./data/{item['name']}.csv')
+    res = requests.get(item["url"], headers=headers)
+    res.raise_for_status()
+    df = pd.read_csv(StringIO(res.content.decode("utf-8")), sep=",", low_memory=False)
+
+    schema = SCHEMAS[item["name"]]
+    schema.validate(df)
+    print(f"✅ {item['name']}: validation passed")
+
+    df.to_csv(f'./data/{item["name"]}.csv', index=False)
 
