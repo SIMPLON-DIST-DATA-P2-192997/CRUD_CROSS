@@ -1,17 +1,38 @@
+import os
 import requests
 import pandas as pd
 from io import StringIO
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
 
+from models import Base, Flotteur, HumainResult, Operation, OperationStats
 from schemas.flotteur import FlotteurSchema
 from schemas.humain_results import HumainResultSchema
 from schemas.operations import OperationSchema
 from schemas.operations_stats import OperationStatsSchema
+
+load_dotenv()
+
+DB_URL = (
+    f"postgresql+psycopg2://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}"
+    f"@{os.getenv('POSTGRES_HOST', 'localhost')}:{os.getenv('POSTGRES_PORT', '5432')}"
+    f"/{os.getenv('POSTGRES_DB')}"
+)
+engine = create_engine(DB_URL)
+Base.metadata.create_all(engine)
 
 SCHEMAS = {
     "human_result": HumainResultSchema,
     "operation_stats": OperationStatsSchema,
     "flotteurs": FlotteurSchema,
     "operations": OperationSchema,
+}
+
+ORM_MODELS = {
+    "human_result": HumainResult,
+    "operation_stats": OperationStats,
+    "flotteurs": Flotteur,
+    "operations": Operation,
 }
 
 urls = [
@@ -45,4 +66,14 @@ for item in urls:
     print(f"✅ {item['name']}: validation passed")
 
     df.to_csv(f'./data/{item["name"]}.csv', index=False)
+
+    orm_model = ORM_MODELS[item["name"]]
+    records: list[dict[str, object]] = [
+        {str(k): v for k, v in row.items()}
+        for row in df.where(pd.notnull(df), other=None).to_dict(orient="records")  # type: ignore[arg-type]
+    ]
+    with engine.begin() as conn:
+        conn.execute(orm_model.__table__.delete())
+        conn.execute(orm_model.__table__.insert(), records)  # type: ignore[arg-type]
+    print(f"📥 {item['name']}: {len(records)} rows inserted into PostgreSQL")
 

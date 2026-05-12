@@ -1,0 +1,143 @@
+from sqlalchemy import (
+    BigInteger, Boolean, Column, Float, Integer, String
+)
+from sqlalchemy.orm import DeclarativeBase
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Flotteur(Base):
+    __tablename__ = "flotteurs"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    operation_id = Column(BigInteger, nullable=False, index=True)
+    numero_ordre = Column(Float, nullable=True)
+    pavillon = Column(String, nullable=True)
+    resultat_flotteur = Column(String, nullable=True)
+    type_flotteur = Column(String, nullable=True)
+    categorie_flotteur = Column(String, nullable=True)
+    numero_immatriculation = Column(String, nullable=True)
+
+
+class HumainResult(Base):
+    __tablename__ = "human_result"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    operation_id = Column(BigInteger, nullable=False, index=True)
+    categorie_personne = Column(String, nullable=True)
+    resultat_humain = Column(String, nullable=True)
+    nombre = Column(Integer, nullable=False)
+    dont_nombre_blesse = Column(Integer, nullable=False)
+
+
+class Operation(Base):
+    __tablename__ = "operations"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    operation_id = Column(BigInteger, nullable=False, unique=True, index=True)
+    type_operation = Column(String(10), nullable=True)
+    pourquoi_alerte = Column(String, nullable=True)
+    moyen_alerte = Column(String, nullable=True)
+    qui_alerte = Column(String, nullable=True)
+    categorie_qui_alerte = Column(String, nullable=True)
+    cross = Column(String, nullable=True)
+    departement = Column(String, nullable=True)
+    est_metropolitain = Column(Boolean, nullable=True)
+    evenement = Column(String, nullable=True)
+    categorie_evenement = Column(String, nullable=True)
+    autorite = Column(String, nullable=True)
+    seconde_autorite = Column(String, nullable=True)
+    zone_responsabilite = Column(String, nullable=True)
+    latitude = Column(Float, nullable=True)
+    longitude = Column(Float, nullable=True)
+    vent_direction = Column(Float, nullable=True)
+    vent_direction_categorie = Column(String, nullable=True)
+    vent_force = Column(Float, nullable=True)
+    mer_force = Column(Float, nullable=True)
+    date_heure_reception_alerte = Column(String, nullable=True)
+    date_heure_fin_operation = Column(String, nullable=True)
+    numero_sitrep = Column(Integer, nullable=True)
+    cross_sitrep = Column(String, nullable=True)
+    fuseau_horaire = Column(String, nullable=True)
+    systeme_source = Column(String, nullable=True)
+
+
+class OperationStats(Base):
+    __tablename__ = "operation_stats"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    operation_id = Column(BigInteger, nullable=False, unique=True, index=True)
+    date = Column(String, nullable=True)
+    annee = Column(Integer, nullable=False)
+    mois = Column(Integer, nullable=False)
+    jour = Column(Integer, nullable=False)
+    mois_texte = Column(String, nullable=True)
+    semaine = Column(Integer, nullable=True)
+    annee_semaine = Column(String, nullable=True)
+    jour_semaine = Column(String, nullable=True)
+    est_weekend = Column(Boolean, nullable=False)
+    est_jour_ferie = Column(Boolean, nullable=False)
+    est_vacances_scolaires = Column(String, nullable=True)
+    phase_journee = Column(String, nullable=True)
+    concerne_plongee = Column(Boolean, nullable=False)
+    implique_wingfoil = Column(Boolean, nullable=False)
+    avec_clandestins = Column(Boolean, nullable=False)
+    distance_cote_metres = Column(Float, nullable=True)
+    distance_cote_milles_nautiques = Column(Float, nullable=True)
+    est_dans_stm = Column(Boolean, nullable=False)
+    nom_stm = Column(String, nullable=True)
+    est_dans_dst = Column(Boolean, nullable=False)
+    nom_dst = Column(String, nullable=True)
+    prefecture_maritime = Column(String, nullable=True)
+    maree_port = Column(String, nullable=True)
+    maree_coefficient = Column(Float, nullable=True)
+    maree_categorie = Column(String, nullable=True)
+    nombre_personnes_blessees = Column(Integer, nullable=False)
+    nombre_personnes_assistees = Column(Integer, nullable=False)
+    nombre_personnes_decedees = Column(Integer, nullable=False)
+    nombre_personnes_decedees_accidentellement = Column(Integer, nullable=False)
+    nombre_personnes_decedees_naturellement = Column(Integer, nullable=False)
+    nombre_personnes_disparues = Column(Integer, nullable=False)
+    nombre_personnes_impliquees_dans_fausse_alerte = Column(Integer, nullable=False)
+    nombre_personnes_retrouvees = Column(Integer, nullable=False)
+    nombre_personnes_secourues = Column(Integer, nullable=False)
+    nombre_personnes_tirees_daffaire_seule = Column(Integer, nullable=False)
+    nombre_personnes_tous_deces = Column(Integer, nullable=False)
+    nombre_personnes_tous_deces_ou_disparues = Column(Integer, nullable=False)
+    nombre_personnes_impliquees = Column(Integer, nullable=False)
+    nombre_personnes_blessees_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_assistees_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_decedees_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_decedees_accidentellement_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_decedees_naturellement_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_disparues_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_impliquees_dans_fausse_alerte_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_retrouvees_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_secourues_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_tirees_daffaire_seule_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_tous_deces_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_tous_deces_ou_disparues_sans_clandestins = Column(Integer, nullable=False)
+    nombre_personnes_impliquees_sans_clandestins = Column(Integer, nullable=False)
+    nombre_flotteurs_commerce_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_peche_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_plaisance_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_loisirs_nautiques_impliques = Column(Integer, nullable=False)
+    nombre_aeronefs_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_autre_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_annexe_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_autre_loisir_nautique_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_canoe_kayak_aviron_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_engin_de_plage_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_kitesurf_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_plaisance_voile_legere_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_plaisance_a_moteur_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_plaisance_a_moteur_moins_8m_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_plaisance_a_moteur_plus_8m_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_plaisance_a_voile_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_planche_a_voile_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_ski_nautique_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_surf_impliques = Column(Integer, nullable=False)
+    nombre_flotteurs_vehicule_nautique_a_moteur_impliques = Column(Integer, nullable=False)
+    sans_flotteur_implique = Column(Boolean, nullable=False)
