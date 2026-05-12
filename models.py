@@ -1,7 +1,7 @@
 from sqlalchemy import (
-    BigInteger, Boolean, Column, Float, Integer, String
+    BigInteger, Boolean, Column, Float, Integer, String, ForeignKey
 )
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, relationship
 
 
 class Base(DeclarativeBase):
@@ -9,10 +9,10 @@ class Base(DeclarativeBase):
 
 
 class Flotteur(Base):
-    __tablename__ = "flotteurs"
+    __tablename__ = "flotteur"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    operation_id = Column(BigInteger, nullable=False, index=True)
+    operation_id = Column(BigInteger, ForeignKey("operation.operation_id"), nullable=False, index=True)
     numero_ordre = Column(Float, nullable=True)
     pavillon = Column(String, nullable=True)
     resultat_flotteur = Column(String, nullable=True)
@@ -20,23 +20,26 @@ class Flotteur(Base):
     categorie_flotteur = Column(String, nullable=True)
     numero_immatriculation = Column(String, nullable=True)
 
+    operation = relationship("Operation", back_populates="flotteurs")
+
 
 class HumainResult(Base):
     __tablename__ = "human_result"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    operation_id = Column(BigInteger, nullable=False, index=True)
+    operation_id = Column(BigInteger, ForeignKey("operation.operation_id"), nullable=False, index=True)
     categorie_personne = Column(String, nullable=True)
     resultat_humain = Column(String, nullable=True)
     nombre = Column(Integer, nullable=False)
     dont_nombre_blesse = Column(Integer, nullable=False)
 
+    operation = relationship("Operation", back_populates="human_results")
+
 
 class Operation(Base):
-    __tablename__ = "operations"
+    __tablename__ = "operation"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    operation_id = Column(BigInteger, nullable=False, unique=True, index=True)
+    operation_id = Column(BigInteger, primary_key=True, autoincrement=True)
     type_operation = Column(String(10), nullable=True)
     pourquoi_alerte = Column(String, nullable=True)
     moyen_alerte = Column(String, nullable=True)
@@ -63,12 +66,15 @@ class Operation(Base):
     fuseau_horaire = Column(String, nullable=True)
     systeme_source = Column(String, nullable=True)
 
+    operations_stats = relationship("OperationStats", back_populates="operation", cascade="all, delete-orphan")
+    human_results = relationship("HumainResult", back_populates="operation", cascade="all, delete-orphan")
+    flotteurs = relationship("Flotteur", back_populates="operation", cascade="all, delete-orphan")
 
 class OperationStats(Base):
-    __tablename__ = "operation_stats"
+    __tablename__ = "operation_stat"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    operation_id = Column(BigInteger, nullable=False, unique=True, index=True)
+    operation_id = Column(BigInteger, ForeignKey("operation.operation_id"), nullable=False, index=True)
     date = Column(String, nullable=True)
     annee = Column(Integer, nullable=False)
     mois = Column(Integer, nullable=False)
@@ -141,3 +147,5 @@ class OperationStats(Base):
     nombre_flotteurs_surf_impliques = Column(Integer, nullable=False)
     nombre_flotteurs_vehicule_nautique_a_moteur_impliques = Column(Integer, nullable=False)
     sans_flotteur_implique = Column(Boolean, nullable=False)
+
+    operation = relationship("Operation", back_populates="operations_stats")

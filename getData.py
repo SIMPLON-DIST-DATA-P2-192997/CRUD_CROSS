@@ -29,13 +29,17 @@ SCHEMAS = {
 }
 
 ORM_MODELS = {
+    "operations": Operation,
     "human_result": HumainResult,
     "operation_stats": OperationStats,
-    "flotteurs": Flotteur,
-    "operations": Operation,
+    "flotteurs": Flotteur
 }
 
 urls = [
+  {
+    "name" : "operations",
+    "url" : "https://www.data.gouv.fr/api/1/datasets/r/fae6bc13-fe4c-4838-b281-b16628b7babe"
+  },
   {
     "name" : "human_result",
     "url" : "https://www.data.gouv.fr/api/1/datasets/r/8eb7f207-1ce5-460c-b941-5f1761a79c46"
@@ -47,10 +51,6 @@ urls = [
   {
     "name" : "flotteurs",
     "url" : "https://www.data.gouv.fr/api/1/datasets/r/ae0e17e4-7117-45f0-80c4-b11b38f31c5c"
-  },
-  {
-    "name" : "operations",
-    "url" : "https://www.data.gouv.fr/api/1/datasets/r/fae6bc13-fe4c-4838-b281-b16628b7babe"
   }
 ]
 
