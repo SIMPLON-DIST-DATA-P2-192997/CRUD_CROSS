@@ -57,15 +57,7 @@ class OperationIngestInput(BaseModel):
     def parse_date(self, value: Optional[str]) -> Optional[datetime]:
         if not value:
             return None
-        # Handle "datetime.datetime(2026, 5, 1, 0, 0)" format
-        if value.startswith("datetime.datetime("):
-            inner = value[len("datetime.datetime("):-1]
-            parts = [int(p.strip()) for p in inner.split(",")]
-            # Pad to at least 3 elements (year, month, day) and cap at 6 (no tzinfo)
-            parts = (parts + [0, 0, 0])[:6]
-            return datetime(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5])
-        # Try ISO format
         try:
-            return datetime.fromisoformat(value)
+            return datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
         except ValueError:
             return None
