@@ -10,4 +10,9 @@ dependencies = [
     "pandera[pandas]>=0.31.1",
     "streamlit>=1.57.0",
     "pydantic>=2.13.4",
+    "psycopg2-binary>=2.9.12",
+    "python-dotenv>=1.2.2",
+    "sqlalchemy>=2.0.49",
+    "alembic>=1.18.4",
+    "fastapi[standard]>=0.136.1",
 ]
