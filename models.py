@@ -1,11 +1,22 @@
 from sqlalchemy import (
-    BigInteger, Boolean, Column, Float, Integer, String, ForeignKey
+    BigInteger, Boolean, Column, DateTime, Float, Integer, String, ForeignKey, func
 )
 from sqlalchemy.orm import DeclarativeBase, relationship
 
 
 class Base(DeclarativeBase):
     pass
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_log"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    table_name = Column(String, nullable=False)
+    operation = Column(String(10), nullable=False)  # INSERT, UPDATE, DELETE
+    record_id = Column(String, nullable=True)
+    changed_data = Column(String, nullable=True)  # JSON snapshot as string
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
 class Flotteur(Base):
