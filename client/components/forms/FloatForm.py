@@ -2,6 +2,7 @@ import streamlit as st
 from schemas import flotteur as f
 from ..validation import Models
 from pydantic import ValidationError
+
 def FloatForm():
   
   if "floats" not in st.session_state:

@@ -1,5 +1,9 @@
 from pydantic import BaseModel
 from typing import Optional
+from .operation_stats import OperationStatsRead
+from .humain_result import HumainResultRead
+from .flotteur import FlotteurRead
+from typing import List
 
 
 class OperationBase(BaseModel):
@@ -41,4 +45,10 @@ class OperationUpdate(OperationBase):
 class OperationRead(OperationBase):
     operation_id: int
 
-    model_config = {"from_attributes": True}
+    model_config = {"from_attributes": True, "ser_json_inf_nan": 'null'}
+    
+
+class OperationReadFull(OperationRead):
+    operations_stats: List[OperationStatsRead] = []
+    human_results: List[HumainResultRead] = []
+    flotteurs: List[FlotteurRead] = []
