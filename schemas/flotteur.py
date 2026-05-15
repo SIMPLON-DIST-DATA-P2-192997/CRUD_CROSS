@@ -19,7 +19,6 @@ class FlotteurSchema(pa.DataFrameModel):
     resultat_flotteur: Series[str] = pa.Field(nullable=True, isin=RESULTATS_FLOTTEUR)
     type_flotteur: Series[str] = pa.Field(nullable=True)
     categorie_flotteur: Series[str] = pa.Field(nullable=True, isin=CATEGORIES_FLOTTEUR)
-    numero_immatriculation: Series[str] = pa.Field(nullable=True)
 
     class Config(pa.DataFrameModel.Config):
         coerce = True

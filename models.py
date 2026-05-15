@@ -1,11 +1,22 @@
 from sqlalchemy import (
-    BigInteger, Boolean, Column, Float, Integer, String, ForeignKey
+    BigInteger, Boolean, Column, DateTime, Float, Integer, String, ForeignKey, func
 )
 from sqlalchemy.orm import DeclarativeBase, relationship
 
 
 class Base(DeclarativeBase):
     pass
+
+
+class AuditLog(Base):
+    __tablename__ = "audit_log"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    table_name = Column(String, nullable=False)
+    operation = Column(String(10), nullable=False)  # INSERT, UPDATE, DELETE
+    record_id = Column(String, nullable=True)
+    changed_data = Column(String, nullable=True)  # JSON snapshot as string
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
 class Flotteur(Base):
@@ -18,7 +29,6 @@ class Flotteur(Base):
     resultat_flotteur = Column(String, nullable=True)
     type_flotteur = Column(String, nullable=True)
     categorie_flotteur = Column(String, nullable=True)
-    numero_immatriculation = Column(String, nullable=True)
 
     operation = relationship("Operation", back_populates="flotteurs")
 
@@ -51,7 +61,6 @@ class Operation(Base):
     evenement = Column(String, nullable=True)
     categorie_evenement = Column(String, nullable=True)
     autorite = Column(String, nullable=True)
-    seconde_autorite = Column(String, nullable=True)
     zone_responsabilite = Column(String, nullable=True)
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
@@ -62,7 +71,6 @@ class Operation(Base):
     date_heure_reception_alerte = Column(String, nullable=True)
     date_heure_fin_operation = Column(String, nullable=True)
     numero_sitrep = Column(Integer, nullable=True)
-    cross_sitrep = Column(String, nullable=True)
     fuseau_horaire = Column(String, nullable=True)
     systeme_source = Column(String, nullable=True)
 
