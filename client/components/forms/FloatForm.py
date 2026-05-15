@@ -54,6 +54,7 @@ def FloatForm():
       st.session_state['floats'] = st.data_editor(
         st.session_state['floats'],
         width='stretch',
-        num_rows='dynamic'
+        num_rows='delete',
+        
       )
     st.divider()

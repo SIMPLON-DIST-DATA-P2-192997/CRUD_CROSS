@@ -1,16 +1,34 @@
 import streamlit as st
 import requests
 from client.components.forms.FloatForm import FloatForm
+
 def fetch_operation(id: str):
-  URL = f"http://localhost:8000/operations/{id}"
+  st.text(f'ID DANS LE FETCH : {id}')
+  URL = f"http://localhost:8000/operations/full/{id}"
   try:
     response = requests.get(URL)
+    st.text(response)
     if response.status_code == 200:
       operation = response.json()
       return operation
   except requests.exceptions.RequestException as e:
     st.text(f"Request failed : {e}")
     return None
+  
+def delete_operation(id: str):
+  st.text(f"ID : {id}")
+  DELETE_URL = f"http://localhost:8000/operations/{id}"
+  
+  try:
+    res = requests.delete(DELETE_URL)
+    if res.status_code == 204:
+      # st.session_state.clear()
+      st.rerun()
+  except requests.exceptions.RequestException as e:
+    st.write(f"Error : {e}")
+    
+    
+    
 
 with st.container():
   
@@ -39,6 +57,13 @@ with st.container():
     stats = rest.pop('operations_stats', [])
     
     st.header("Operation details")
+    left,right = st.columns(2)
+    
+    delete = left.button("Delete")
+    if delete:
+      delete_operation(id_input)
+    update = right.button('Update')
+    
     st.table(rest)
     
     st.header('Human results')
