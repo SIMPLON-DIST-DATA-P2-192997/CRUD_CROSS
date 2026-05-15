@@ -86,9 +86,6 @@ for item in urls:
     db_df.to_csv(f'./data/{item["name"]}.csv', index=False)
     datasets[item["name"]] = db_df
 
-# Delete in child-first order to respect FK constraints, then insert
-# Delete order: children first, parent last
-# Insert order: parent first, children after
 DELETE_ORDER = ["operation_stat", "human_result", "flotteur", "operation"]
 INSERT_ORDER = ["operation", "flotteur", "human_result", "operation_stat"]
 

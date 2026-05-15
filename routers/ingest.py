@@ -208,3 +208,4 @@ def ingest_operation(payload: OperationIngestInput, db: Session = Depends(get_db
     db.commit()
     db.refresh(operation)
     return operation
+
