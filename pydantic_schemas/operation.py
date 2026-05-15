@@ -156,6 +156,7 @@ class OperationRead(BaseModel):
     numero_sitrep: Optional[int] = None
     fuseau_horaire: Optional[str] = None
     systeme_source: Optional[str] = None
+    
 
     model_config = {"from_attributes": True}
 

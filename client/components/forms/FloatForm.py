@@ -1,4 +1,7 @@
+from typing import List
+
 import streamlit as st
+from pydantic_schemas.flotteur import FlotteurRead
 from schemas import flotteur as f
 from ..validation import Models
 from pydantic import ValidationError
@@ -54,6 +57,7 @@ def FloatForm():
       st.session_state['floats'] = st.data_editor(
         st.session_state['floats'],
         width='stretch',
-        num_rows='dynamic'
+        num_rows='delete',
+        
       )
     st.divider()

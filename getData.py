@@ -102,4 +102,3 @@ with engine.begin() as conn:
         ]
         conn.execute(ORM_MODELS[name].__table__.insert(), records)  # type: ignore[arg-type]
         print(f"📥 {name}: {len(records)} rows inserted")
-

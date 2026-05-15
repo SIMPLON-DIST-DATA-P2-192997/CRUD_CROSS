@@ -86,7 +86,7 @@ keys = [
   ]
 
 
-def FormContainer():
+def FormContainer(update: bool = False):
   
   if "part" not in st.session_state:
     st.session_state['part'] = 1
