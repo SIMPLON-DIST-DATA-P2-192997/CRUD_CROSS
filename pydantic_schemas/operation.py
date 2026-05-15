@@ -135,23 +135,11 @@ class OperationRead(BaseModel):
     fuseau_horaire: Optional[str] = None
     systeme_source: Optional[str] = None
 
-
-class OperationCreate(OperationBase):
-    pass
-
-
-class OperationUpdate(OperationBase):
-    pass
-
-
-class OperationRead(OperationBase):
-    operation_id: int
-
-    model_config = {"from_attributes": True, "ser_json_inf_nan": 'null'}
-    
+    model_config = {"from_attributes": True}
 
 class OperationReadFull(OperationRead):
     operations_stats: List[OperationStatsRead] = []
     human_results: List[HumainResultRead] = []
     flotteurs: List[FlotteurRead] = []
     model_config = {"from_attributes": True}
+
