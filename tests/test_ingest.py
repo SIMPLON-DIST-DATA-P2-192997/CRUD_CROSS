@@ -4,7 +4,7 @@ from pydantic_schemas.ingest import OperationIngestInput
 
 VALID_PAYLOAD = {
     "op_operation_type": "MAS",
-    "op_cause": "avarie",
+    "op_cause": "Événement reconnu",
     "op_means": "oui",
     "op_author": "michel",
     "op_author_category": "Autorité militaire française à terre",
@@ -14,7 +14,6 @@ VALID_PAYLOAD = {
     "op_event": "jen sais rien",
     "op_event_category": "Accidents individuels à personnes",
     "op_authority": "Affaires maritimes",
-    "op_second_authority": None,
     "op_responsability_zone": "Responsabilité française",
     "pa_lat": "4.98",
     "pa_lng": "1.52",

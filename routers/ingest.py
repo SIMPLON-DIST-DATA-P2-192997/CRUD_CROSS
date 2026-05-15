@@ -164,7 +164,6 @@ def ingest_operation(payload: OperationIngestInput, db: Session = Depends(get_db
         evenement=payload.op_event,
         categorie_evenement=payload.op_event_category,
         autorite=payload.op_authority,
-        seconde_autorite=payload.op_second_authority,
         zone_responsabilite=payload.op_responsability_zone,
         latitude=float(payload.pa_lat) if payload.pa_lat else None,
         longitude=float(payload.pa_lng) if payload.pa_lng else None,
@@ -188,7 +187,6 @@ def ingest_operation(payload: OperationIngestInput, db: Session = Depends(get_db
             resultat_flotteur=f.float_state,
             type_flotteur=f.type,
             categorie_flotteur=f.category,
-            numero_immatriculation=f.immatriculation,
         )
         db.add(flotteur)
 

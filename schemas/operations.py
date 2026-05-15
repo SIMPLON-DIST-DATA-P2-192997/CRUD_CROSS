@@ -30,10 +30,6 @@ AUTORITES = [
     "CROSS ou sous-CROSS", "MRCC étranger", "Maire", "Préfet maritime",
     "RCC - RSC français", "RCC - RSC étrangers", "Représentant du gouvernement", "SG-Mer",
 ]
-SECONDES_AUTORITES = [
-    "Autorité portuaire", "Autre", "CROSS ou sous-CROSS", "MRCC étranger",
-    "Maire", "Préfet maritime", "RCC - RSC français", "RCC - RSC étrangers",
-]
 ZONES_RESPONSABILITE = [
     "Eaux territoriales", "Hors responsabilité", "Plage et 300 mètres",
     "Plan eau salée", "Port et accès", "Responsabilité française",
@@ -60,7 +56,6 @@ class OperationSchema(pa.DataFrameModel):
     evenement: Series[str] = pa.Field(nullable=True)
     categorie_evenement: Series[str] = pa.Field(nullable=True, isin=CATEGORIES_EVENEMENT)
     autorite: Series[str] = pa.Field(nullable=True, isin=AUTORITES)
-    seconde_autorite: Series[str] = pa.Field(nullable=True, isin=SECONDES_AUTORITES)
     zone_responsabilite: Series[str] = pa.Field(nullable=True, isin=ZONES_RESPONSABILITE)
     latitude: Series[float] = pa.Field(nullable=True, ge=-90, le=90)
     longitude: Series[float] = pa.Field(nullable=True, ge=-180, le=180)
@@ -71,7 +66,6 @@ class OperationSchema(pa.DataFrameModel):
     date_heure_reception_alerte: Series[str] = pa.Field(nullable=True)
     date_heure_fin_operation: Series[str] = pa.Field(nullable=True)
     numero_sitrep: Series[int] = pa.Field(nullable=True, ge=0)
-    cross_sitrep: Series[str] = pa.Field(nullable=True)
     fuseau_horaire: Series[str] = pa.Field(nullable=True, isin=FUSEAUX_HORAIRES)
     systeme_source: Series[str] = pa.Field(nullable=True, isin=SYSTEMES_SOURCE)
 

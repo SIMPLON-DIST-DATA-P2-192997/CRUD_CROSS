@@ -28,7 +28,6 @@ erDiagram
         String evenement
         String categorie_evenement
         String autorite
-        String seconde_autorite
         String zone_responsabilite
         Float latitude
         Float longitude
@@ -39,7 +38,6 @@ erDiagram
         String date_heure_reception_alerte
         String date_heure_fin_operation
         Integer numero_sitrep
-        String cross_sitrep
         String fuseau_horaire
         String systeme_source
     }
@@ -52,7 +50,6 @@ erDiagram
         String resultat_flotteur
         String type_flotteur
         String categorie_flotteur
-        String numero_immatriculation
     }
 
     human_result {
