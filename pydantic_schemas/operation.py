@@ -91,6 +91,28 @@ class OperationBase(BaseModel):
         return v
 
     @model_validator(mode="after")
+    def compute_vent_direction_categorie(self) -> "OperationBase":
+        if self.vent_direction is not None and self.vent_direction_categorie is None:
+            deg = self.vent_direction % 360
+            if deg < 22.5 or deg >= 337.5:
+                self.vent_direction_categorie = "nord"
+            elif deg < 67.5:
+                self.vent_direction_categorie = "nord-est"
+            elif deg < 112.5:
+                self.vent_direction_categorie = "est"
+            elif deg < 157.5:
+                self.vent_direction_categorie = "sud-est"
+            elif deg < 202.5:
+                self.vent_direction_categorie = "sud"
+            elif deg < 247.5:
+                self.vent_direction_categorie = "sud-ouest"
+            elif deg < 292.5:
+                self.vent_direction_categorie = "ouest"
+            else:
+                self.vent_direction_categorie = "nord-ouest"
+        return self
+
+    @model_validator(mode="after")
     def validate_dates_order(self) -> "OperationBase":
         start = _parse_dt(self.date_heure_reception_alerte)
         end = _parse_dt(self.date_heure_fin_operation)
@@ -109,44 +131,38 @@ class OperationUpdate(OperationBase):
     pass
 
 
-# class OperationRead(BaseModel):
-#     operation_id: int
-#     type_operation: Optional[str] = None
-#     pourquoi_alerte: Optional[str] = None
-#     moyen_alerte: Optional[str] = None
-#     qui_alerte: Optional[str] = None
-#     categorie_qui_alerte: Optional[str] = None
-#     cross: Optional[str] = None
-#     departement: Optional[str] = None
-#     est_metropolitain: Optional[bool] = None
-#     evenement: Optional[str] = None
-#     categorie_evenement: Optional[str] = None
-#     autorite: Optional[str] = None
-#     zone_responsabilite: Optional[str] = None
-#     latitude: Optional[float] = None
-#     longitude: Optional[float] = None
-#     vent_direction: Optional[float] = None
-#     vent_direction_categorie: Optional[str] = None
-#     vent_force: Optional[float] = None
-#     mer_force: Optional[float] = None
-#     date_heure_reception_alerte: Optional[str] = None
-#     date_heure_fin_operation: Optional[str] = None
-#     numero_sitrep: Optional[int] = None
-#     fuseau_horaire: Optional[str] = None
-#     systeme_source: Optional[str] = None
-    
-#     model_config = {"from_attributes": True, "ser_json_inf_nan": 'null'}
-
-
-
-class OperationRead(OperationBase):
+class OperationRead(BaseModel):
     operation_id: int
-
-    model_config = {"from_attributes": True, "ser_json_inf_nan": 'null'}
+    type_operation: Optional[str] = None
+    pourquoi_alerte: Optional[str] = None
+    moyen_alerte: Optional[str] = None
+    qui_alerte: Optional[str] = None
+    categorie_qui_alerte: Optional[str] = None
+    cross: Optional[str] = None
+    departement: Optional[str] = None
+    est_metropolitain: Optional[bool] = None
+    evenement: Optional[str] = None
+    categorie_evenement: Optional[str] = None
+    autorite: Optional[str] = None
+    zone_responsabilite: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+    vent_direction: Optional[float] = None
+    vent_direction_categorie: Optional[str] = None
+    vent_force: Optional[float] = None
+    mer_force: Optional[float] = None
+    date_heure_reception_alerte: Optional[str] = None
+    date_heure_fin_operation: Optional[str] = None
+    numero_sitrep: Optional[int] = None
+    fuseau_horaire: Optional[str] = None
+    systeme_source: Optional[str] = None
     
+
+    model_config = {"from_attributes": True}
 
 class OperationReadFull(OperationRead):
     operations_stats: List[OperationStatsRead] = []
     human_results: List[HumainResultRead] = []
     flotteurs: List[FlotteurRead] = []
     model_config = {"from_attributes": True}
+

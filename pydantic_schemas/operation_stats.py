@@ -140,7 +140,80 @@ class OperationStatsUpdate(BaseModel):
     maree_categorie: Optional[str] = None
 
 
-class OperationStatsRead(OperationStatsBase):
+class OperationStatsRead(BaseModel):
     id: int
+    operation_id: int
+    date: Optional[str] = None
+    annee: Optional[int] = None
+    mois: Optional[int] = None
+    jour: Optional[int] = None
+    mois_texte: Optional[str] = None
+    semaine: Optional[int] = None
+    annee_semaine: Optional[str] = None
+    jour_semaine: Optional[str] = None
+    est_weekend: Optional[bool] = None
+    est_jour_ferie: Optional[bool] = None
+    est_vacances_scolaires: Optional[str] = None
+    phase_journee: Optional[str] = None
+    concerne_plongee: Optional[bool] = None
+    implique_wingfoil: Optional[bool] = None
+    avec_clandestins: Optional[bool] = None
+    distance_cote_metres: Optional[float] = None
+    distance_cote_milles_nautiques: Optional[float] = None
+    est_dans_stm: Optional[bool] = None
+    nom_stm: Optional[str] = None
+    est_dans_dst: Optional[bool] = None
+    nom_dst: Optional[str] = None
+    prefecture_maritime: Optional[str] = None
+    maree_port: Optional[str] = None
+    maree_coefficient: Optional[float] = None
+    maree_categorie: Optional[str] = None
+    nombre_personnes_blessees: Optional[int] = None
+    nombre_personnes_assistees: Optional[int] = None
+    nombre_personnes_decedees: Optional[int] = None
+    nombre_personnes_decedees_accidentellement: Optional[int] = None
+    nombre_personnes_decedees_naturellement: Optional[int] = None
+    nombre_personnes_disparues: Optional[int] = None
+    nombre_personnes_impliquees_dans_fausse_alerte: Optional[int] = None
+    nombre_personnes_retrouvees: Optional[int] = None
+    nombre_personnes_secourues: Optional[int] = None
+    nombre_personnes_tirees_daffaire_seule: Optional[int] = None
+    nombre_personnes_tous_deces: Optional[int] = None
+    nombre_personnes_tous_deces_ou_disparues: Optional[int] = None
+    nombre_personnes_impliquees: Optional[int] = None
+    nombre_personnes_blessees_sans_clandestins: Optional[int] = None
+    nombre_personnes_assistees_sans_clandestins: Optional[int] = None
+    nombre_personnes_decedees_sans_clandestins: Optional[int] = None
+    nombre_personnes_decedees_accidentellement_sans_clandestins: Optional[int] = None
+    nombre_personnes_decedees_naturellement_sans_clandestins: Optional[int] = None
+    nombre_personnes_disparues_sans_clandestins: Optional[int] = None
+    nombre_personnes_impliquees_dans_fausse_alerte_sans_clandestins: Optional[int] = None
+    nombre_personnes_retrouvees_sans_clandestins: Optional[int] = None
+    nombre_personnes_secourues_sans_clandestins: Optional[int] = None
+    nombre_personnes_tirees_daffaire_seule_sans_clandestins: Optional[int] = None
+    nombre_personnes_tous_deces_sans_clandestins: Optional[int] = None
+    nombre_personnes_tous_deces_ou_disparues_sans_clandestins: Optional[int] = None
+    nombre_personnes_impliquees_sans_clandestins: Optional[int] = None
+    nombre_flotteurs_commerce_impliques: Optional[int] = None
+    nombre_flotteurs_peche_impliques: Optional[int] = None
+    nombre_flotteurs_plaisance_impliques: Optional[int] = None
+    nombre_flotteurs_loisirs_nautiques_impliques: Optional[int] = None
+    nombre_aeronefs_impliques: Optional[int] = None
+    nombre_flotteurs_autre_impliques: Optional[int] = None
+    nombre_flotteurs_annexe_impliques: Optional[int] = None
+    nombre_flotteurs_autre_loisir_nautique_impliques: Optional[int] = None
+    nombre_flotteurs_canoe_kayak_aviron_impliques: Optional[int] = None
+    nombre_flotteurs_engin_de_plage_impliques: Optional[int] = None
+    nombre_flotteurs_kitesurf_impliques: Optional[int] = None
+    nombre_flotteurs_plaisance_voile_legere_impliques: Optional[int] = None
+    nombre_flotteurs_plaisance_a_moteur_impliques: Optional[int] = None
+    nombre_flotteurs_plaisance_a_moteur_moins_8m_impliques: Optional[int] = None
+    nombre_flotteurs_plaisance_a_moteur_plus_8m_impliques: Optional[int] = None
+    nombre_flotteurs_plaisance_a_voile_impliques: Optional[int] = None
+    nombre_flotteurs_planche_a_voile_impliques: Optional[int] = None
+    nombre_flotteurs_ski_nautique_impliques: Optional[int] = None
+    nombre_flotteurs_surf_impliques: Optional[int] = None
+    nombre_flotteurs_vehicule_nautique_a_moteur_impliques: Optional[int] = None
+    sans_flotteur_implique: Optional[bool] = None
 
     model_config = {"from_attributes": True}

@@ -1,4 +1,7 @@
+from typing import List
+
 import streamlit as st
+from pydantic_schemas.flotteur import FlotteurRead
 from schemas import flotteur as f
 from ..validation import Models
 from pydantic import ValidationError
