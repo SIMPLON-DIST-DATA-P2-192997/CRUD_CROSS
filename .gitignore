@@ -220,3 +220,5 @@ __marimo__/
 # Data files
 data/
 quarantine/
+
+.vscode/

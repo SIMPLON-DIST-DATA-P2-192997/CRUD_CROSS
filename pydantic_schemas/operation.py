@@ -1,6 +1,11 @@
 from pydantic import BaseModel, Field, field_validator, model_validator
-from typing import Literal, Optional
+from typing import List, Literal, Optional
 from datetime import datetime
+
+from pydantic_schemas.flotteur import FlotteurRead
+from pydantic_schemas.humain_result import HumainResultRead
+from pydantic_schemas.operation_stats import OperationStatsRead
+
 
 DATETIME_FMT = "%Y-%m-%d %H:%M:%S"
 
@@ -130,4 +135,23 @@ class OperationRead(BaseModel):
     fuseau_horaire: Optional[str] = None
     systeme_source: Optional[str] = None
 
+
+class OperationCreate(OperationBase):
+    pass
+
+
+class OperationUpdate(OperationBase):
+    pass
+
+
+class OperationRead(OperationBase):
+    operation_id: int
+
+    model_config = {"from_attributes": True, "ser_json_inf_nan": 'null'}
+    
+
+class OperationReadFull(OperationRead):
+    operations_stats: List[OperationStatsRead] = []
+    human_results: List[HumainResultRead] = []
+    flotteurs: List[FlotteurRead] = []
     model_config = {"from_attributes": True}
