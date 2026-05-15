@@ -1,3 +1,3 @@
-from ..components import FormContainer
+from client.components.FormContainer import FormContainer
 
 FormContainer()

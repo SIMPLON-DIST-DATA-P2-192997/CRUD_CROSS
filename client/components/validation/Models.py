@@ -32,9 +32,9 @@ class OperationSchema(BaseModel):
 class ParametersSchema(BaseModel):
   pa_start_date: datetime.datetime
   pa_end_date: datetime.datetime
-  pa_lat: float
-  pa_lng: float
-  pa_wind_direction: Union[int|float]
+  pa_lat: float = Field(ge=-90, le=90)
+  pa_lng: float = Field(ge=-180, le=180)
+  pa_wind_direction: Union[int|float] = Field(ge=0, le=360)
   pa_wind_strength: int = Field(ge=0, le=12)
   pa_deps: Union[str|int] = None
   pa_time_zone: str
