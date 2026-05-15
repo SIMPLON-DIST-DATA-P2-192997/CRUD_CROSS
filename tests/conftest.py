@@ -7,7 +7,7 @@ import os
 
 from models import Base
 from database import get_db
-from main_fastapi import app
+from main import app
 from audit import register_audit_listeners
 
 load_dotenv()
@@ -15,7 +15,7 @@ load_dotenv()
 DB_URL = (
     f"postgresql+psycopg2://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}"
     f"@{os.getenv('POSTGRES_HOST', 'localhost')}:{os.getenv('POSTGRES_PORT', '5432')}"
-    f"/{os.environ['POSTGRES_DB']}"
+    f"/{os.environ['POSTGRES_DB']}_test"
 )
 
 engine = create_engine(DB_URL)
