@@ -91,6 +91,28 @@ class OperationBase(BaseModel):
         return v
 
     @model_validator(mode="after")
+    def compute_vent_direction_categorie(self) -> "OperationBase":
+        if self.vent_direction is not None and self.vent_direction_categorie is None:
+            deg = self.vent_direction % 360
+            if deg < 22.5 or deg >= 337.5:
+                self.vent_direction_categorie = "nord"
+            elif deg < 67.5:
+                self.vent_direction_categorie = "nord-est"
+            elif deg < 112.5:
+                self.vent_direction_categorie = "est"
+            elif deg < 157.5:
+                self.vent_direction_categorie = "sud-est"
+            elif deg < 202.5:
+                self.vent_direction_categorie = "sud"
+            elif deg < 247.5:
+                self.vent_direction_categorie = "sud-ouest"
+            elif deg < 292.5:
+                self.vent_direction_categorie = "ouest"
+            else:
+                self.vent_direction_categorie = "nord-ouest"
+        return self
+
+    @model_validator(mode="after")
     def validate_dates_order(self) -> "OperationBase":
         start = _parse_dt(self.date_heure_reception_alerte)
         end = _parse_dt(self.date_heure_fin_operation)

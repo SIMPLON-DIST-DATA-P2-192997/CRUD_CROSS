@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from client.components.forms.FloatForm import FloatForm
 def fetch_operation(id: str):
-  URL = f"http://localhost:8000/operations/{id}"
+  URL = f"http://localhost:8000/operations/full/{id}"
   try:
     response = requests.get(URL)
     if response.status_code == 200:
