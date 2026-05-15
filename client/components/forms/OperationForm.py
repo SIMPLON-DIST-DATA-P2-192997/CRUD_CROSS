@@ -17,8 +17,6 @@ def OperationForm():
       event = st.text_input("*Evènement", placeholder="Évenement qui a donné lieu à l'opération", key='op_event')
       event_category = st.selectbox("*Catégorie de l'évènement", options=operations.CATEGORIES_EVENEMENT, index=None, key="op_event_category")
       authority = st.selectbox("*Autorité", options=operations.AUTORITES, index=None, key="op_authority")
-      if authority != None:
-        second_authority = st.selectbox("2nd autorité", operations.AUTORITES, index=None, key='op_second_authority')
       responsability_zone = st.selectbox("*Zone de responsabilité", options=operations.ZONES_RESPONSABILITE, index=None, key='op_responsability_zone')
       is_metro = st.checkbox("En métropole",key="op_is_metro")
     
